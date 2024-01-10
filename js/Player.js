@@ -27,35 +27,37 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
     }
 
     update() {
-        const speed =  2.5;
+        const speed = 2.5;
         let playerVelocity = new Phaser.Math.Vector2();
-
+    
         // 키보드 입력 처리
         if (this.inputKeys.left.isDown || this.cursors.left.isDown) {
             playerVelocity.x = -1;
+            this.setFlipX(true); // 좌측 방향일 때 스케일을 반전
         } else if (this.inputKeys.right.isDown || this.cursors.right.isDown) {
             playerVelocity.x = 1;
+            this.setFlipX(false); // 우측 방향일 때 스케일을 원래대로
         }
-
+    
         if (this.inputKeys.up.isDown || this.cursors.up.isDown) {
             playerVelocity.y = -1;
         } else if (this.inputKeys.down.isDown || this.cursors.down.isDown) {
             playerVelocity.y = 1;
         }
-
+    
         // 대각선 이동 보정
         if (playerVelocity.x !== 0 && playerVelocity.y !== 0) {
             playerVelocity.normalize();
         }
-
+    
         playerVelocity.normalize();
         playerVelocity.scale(speed);
         this.setVelocity(playerVelocity.x, playerVelocity.y);
-
-        if(Math.abs(this.velocity.x) > 0.1 || Math.abs(this.velocity.y) > 0.1) {
+    
+        if (Math.abs(this.velocity.x) > 0.1 || Math.abs(this.velocity.y) > 0.1) {
             this.anims.play('knight_walk', true);
-        }else {
-            this.anims.play('knight_idle', true)
+        } else {
+            this.anims.play('knight_idle', true);
         }
     }
 }
