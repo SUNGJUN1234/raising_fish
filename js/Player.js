@@ -10,8 +10,11 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         scene.load.animation('knight_anim', 'assets/images/knight_anim.json')
     }
 
+    get velocity() {
+        return this.body.velocity;
+    }
+
     update() {
-        this.anims.play('knight_walk', true)
         const speed =  2.5;
         let playerVelocity = new Phaser.Math.Vector2();
 
@@ -33,9 +36,14 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
             playerVelocity.normalize();
         }
 
-        
         playerVelocity.normalize();
         playerVelocity.scale(speed);
         this.setVelocity(playerVelocity.x, playerVelocity.y);
+
+        if(Math.abs(this.velocity.x) > 0.1 || Math.abs(this.velocity.y) > 0.1) {
+            this.anims.play('knight_walk', true);
+        }else {
+            this.anims.play('knight_idle', true)
+        }
     }
 }
