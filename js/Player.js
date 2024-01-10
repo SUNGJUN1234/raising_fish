@@ -13,6 +13,8 @@ export default class Player extends Phaser.Physics.Matter.Sprite {
         });
         this.setExistingBody(compoundBody);
 
+        // 캐릭터가 돌아가지 않도록 설정
+        this.setFixedRotation();
     }
 
     static preload(scene) {
